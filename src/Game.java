@@ -8,8 +8,7 @@ public class Game extends Observable {
 
     private Thread mainLoop;
     private boolean alive;
-    reusablePool pool = reusablePool.getInstance();
-    //reusablePool pool = reusablePool.getInstance();
+    ReusablePool pool = ReusablePool.getInstance();
     public Game() {
         alive = true;
 

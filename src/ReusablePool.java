@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class reusablePool {
-    protected static  reusablePool instance = null;
+public class ReusablePool {
+    protected static  ReusablePool instance = null;
     public List<Bullet> bullets = new ArrayList<Bullet>();
-    public static reusablePool getInstance(){
+    public static ReusablePool getInstance(){
         if(instance == null){
-            instance = new reusablePool();
+            instance = new ReusablePool();
         }
         return instance;
     }
-    private reusablePool(){
+    private ReusablePool(){
         for(int i=0; i<100; i++) {
             //bullets storage
             bullets.add(new Bullet(-50,-50,0,0));
