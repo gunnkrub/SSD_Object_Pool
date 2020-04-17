@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -7,13 +6,13 @@ public class Game extends Observable {
     private int width = 600;
     private int height = 600;
 
-    private List<Bullet> bullets;
     private Thread mainLoop;
     private boolean alive;
-
+    reusablePool reusablePool = new reusablePool();
+    //reusablePool pool = reusablePool.getInstance();
     public Game() {
         alive = true;
-        bullets = new ArrayList<Bullet>();
+
         mainLoop = new Thread() {
             @Override
             public void run() {
@@ -31,30 +30,25 @@ public class Game extends Observable {
         };
         mainLoop.start();
     }
-
     public void tick() {
         moveBullets();
         cleanupBullets();
     }
 
     private void moveBullets() {
-        for(Bullet bullet : bullets) {
+        for(Bullet bullet : reusablePool.bullets) {
             bullet.move();
         }
     }
 
     private void cleanupBullets() {
-        List<Bullet> toRemove = new ArrayList<Bullet>();
-        for(Bullet bullet : bullets) {
+        for(Bullet bullet : reusablePool.bullets) {
             if(bullet.getX() <= 0 ||
                     bullet.getX() >= width ||
                     bullet.getY() <= 0 ||
                     bullet.getY() >= height) {
-                toRemove.add(bullet);
+                //reusablePool.releaseReusable(bullet);
             }
-        }
-        for(Bullet bullet : toRemove) {
-            bullets.remove(bullet);
         }
     }
 
@@ -67,17 +61,26 @@ public class Game extends Observable {
     }
 
     public List<Bullet> getBullets() {
-        return bullets;
+        return reusablePool.bullets;
     }
 
     public void burstBullets(int x, int y) {
-        bullets.add(new Bullet(x, y, 1, 0));
-        bullets.add(new Bullet(x, y, 0, 1));
-        bullets.add(new Bullet(x, y, -1, 0));
-        bullets.add(new Bullet(x, y, 0, -1));
-        bullets.add(new Bullet(x, y, 1, 1));
-        bullets.add(new Bullet(x, y, 1, -1));
-        bullets.add(new Bullet(x, y, -1, 1));
-        bullets.add(new Bullet(x, y, -1, -1));
+        Bullet bullet = reusablePool.acquireReusable();
+        bullet.set(x, y, 1, 0);
+        Bullet bullet2 = reusablePool.acquireReusable();
+        bullet2.set(x, y, 0, 1);
+        Bullet bullet3 = reusablePool.acquireReusable();
+        bullet3.set(x, y, -1, 0);
+        Bullet bullet4 = reusablePool.acquireReusable();
+        bullet4.set(x, y, 0, -1);
+        Bullet bullet5 = reusablePool.acquireReusable();
+        bullet5.set(x, y, 1, 1);
+        Bullet bullet6 = reusablePool.acquireReusable();
+        bullet6.set(x, y, 1, -1);
+        Bullet bullet7 = reusablePool.acquireReusable();
+        bullet7.set(x, y, -1, 1);
+        Bullet bullet8 = reusablePool.acquireReusable();
+        bullet8.set(x, y, -1, -1);
+
     }
 }
