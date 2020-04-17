@@ -77,7 +77,7 @@ public class Gui extends JFrame implements Observer {
     class Controller extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            int offSet = 30;
+            int offSet = 10;
             game.burstBullets(e.getX() + offSet, e.getY() + offSet);
         }
     }
