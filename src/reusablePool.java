@@ -11,7 +11,7 @@ public class reusablePool {
         }
         return instance;
     }
-    public reusablePool(){
+    private reusablePool(){
         for(int i=0; i<100; i++) {
             //bullets storage
             bullets.add(new Bullet(-50,-50,0,0));

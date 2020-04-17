@@ -8,7 +8,7 @@ public class Game extends Observable {
 
     private Thread mainLoop;
     private boolean alive;
-    reusablePool reusablePool = reusablePool.getInstance();
+    reusablePool pool = reusablePool.getInstance();
     //reusablePool pool = reusablePool.getInstance();
     public Game() {
         alive = true;
@@ -36,18 +36,18 @@ public class Game extends Observable {
     }
 
     private void moveBullets() {
-        for(Bullet bullet : reusablePool.bullets) {
+        for(Bullet bullet : pool.bullets) {
             bullet.move();
         }
     }
 
     private void cleanupBullets() {
-        for(Bullet bullet : reusablePool.bullets) {
+        for(Bullet bullet : pool.bullets) {
             if(bullet.getX() < -50 ||
                     bullet.getX() >= width ||
                     bullet.getY() < -50 ||
                     bullet.getY() >= height) {
-                reusablePool.releaseReusable(bullet);
+                pool.releaseReusable(bullet);
             }
         }
     }
@@ -61,25 +61,25 @@ public class Game extends Observable {
     }
 
     public List<Bullet> getBullets() {
-        return reusablePool.bullets;
+        return pool.bullets;
     }
 
     public void burstBullets(int x, int y) {
-        Bullet bullet = reusablePool.acquireReusable();
+        Bullet bullet = pool.acquireReusable();
         bullet.set(x, y, 1, 0);
-        Bullet bullet2 = reusablePool.acquireReusable();
+        Bullet bullet2 = pool.acquireReusable();
         bullet2.set(x, y, 0, 1);
-        Bullet bullet3 = reusablePool.acquireReusable();
+        Bullet bullet3 = pool.acquireReusable();
         bullet3.set(x, y, -1, 0);
-        Bullet bullet4 = reusablePool.acquireReusable();
+        Bullet bullet4 = pool.acquireReusable();
         bullet4.set(x, y, 0, -1);
-        Bullet bullet5 = reusablePool.acquireReusable();
+        Bullet bullet5 = pool.acquireReusable();
         bullet5.set(x, y, 1, 1);
-        Bullet bullet6 = reusablePool.acquireReusable();
+        Bullet bullet6 = pool.acquireReusable();
         bullet6.set(x, y, 1, -1);
-        Bullet bullet7 = reusablePool.acquireReusable();
+        Bullet bullet7 = pool.acquireReusable();
         bullet7.set(x, y, -1, 1);
-        Bullet bullet8 = reusablePool.acquireReusable();
+        Bullet bullet8 = pool.acquireReusable();
         bullet8.set(x, y, -1, -1);
 
     }
