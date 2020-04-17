@@ -43,11 +43,11 @@ public class Game extends Observable {
 
     private void cleanupBullets() {
         for(Bullet bullet : reusablePool.bullets) {
-            if(bullet.getX() <= 0 ||
+            if(bullet.getX() < -50 ||
                     bullet.getX() >= width ||
-                    bullet.getY() <= 0 ||
+                    bullet.getY() < -50 ||
                     bullet.getY() >= height) {
-                //reusablePool.releaseReusable(bullet);
+                reusablePool.releaseReusable(bullet);
             }
         }
     }

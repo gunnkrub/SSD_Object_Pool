@@ -6,7 +6,7 @@ public class reusablePool {
     public List<Bullet> bullets = new ArrayList<Bullet>();
     public reusablePool(){
         for(int i=0; i<100; i++) {
-            bullets.add(new Bullet(-100,-100,0,0));
+            bullets.add(new Bullet(-50,-50,0,0));
         }
     }
     public Bullet acquireReusable(){
@@ -14,7 +14,7 @@ public class reusablePool {
         Collections.rotate(bullets, -1);
         return bullet;
     }
-    //public void releaseReusable(Bullet bullet) {
-    //    bullet.x = 0;
-    //}
+    public void releaseReusable(Bullet bullet) {
+        bullet.set(-50,-50,0,0);
+    }
 }
